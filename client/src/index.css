@@ -1,0 +1,141 @@
+/* .container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.reader {
+    width: 300px;
+    margin-bottom: 1rem;
+}
+
+.form label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.form input,
+.form textarea {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.25rem;
+}
+
+button {
+    padding: 0.75rem 1.5rem;
+    margin-top: 1rem;
+} */
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f2f5;
+    color: #333;
+}
+
+/* Centered card */
+.container {
+    max-width: 800px;
+    margin: 2rem auto;
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.container h1 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #444;
+}
+
+/* Scanner box */
+.reader {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto 1.5rem;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Manual entry row */
+.barcode-group {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.barcode-group input {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.barcode-group button {
+    padding: 0.75rem 1.25rem;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.barcode-group button:hover {
+    background: #0056b3;
+}
+
+.form {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+}
+
+.form label {
+    display: flex;
+    flex-direction: column;
+    font-weight: 500;
+}
+
+.form input,
+.form textarea {
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 0.25rem;
+    width: 100%;
+}
+
+.form textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.form button {
+    grid-column: 1 / -1;
+    justify-self: center;
+    padding: 0.75rem 1.5rem;
+    background: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.form button:hover {
+    background: #218838;
+}
+
+
+
+/* ///// */
+
+/* Container grid */
