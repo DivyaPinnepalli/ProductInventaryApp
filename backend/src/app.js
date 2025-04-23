@@ -3,6 +3,8 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import productRoutes from './routes/products.route.js'
+import authRouter from './routes/auth.js'
+
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -15,6 +17,7 @@ mongoose.connect('mongodb+srv://pinnepallidivya:eA3PkKkfzDd5vz9R@products.mtzboi
   .catch(err => console.error('MongoDB connection error:', err));
 
 app.use('/api/products', productRoutes);
+app.use('/auth',authRouter);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
