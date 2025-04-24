@@ -13,6 +13,7 @@ const generateToken = (id) => {
 
 router.post("/signup", async (req,res)=>{
     console.log("signup")
+    console.log(req.body);
     const { username, email, password } = req.body;
   
   const errors = validateRegisterUser(req.body);
@@ -47,30 +48,49 @@ router.post("/signup", async (req,res)=>{
 })
 
 
-router.post("/login",async(req,res)=>{
-    const { email, password } = req.body;
-  
-  const errors = validateAuthUser(req.body);
+router.post("/login", async (req, res) => {
+  console.log("Login payload:", req.body);
+
+  const { email: rawEmail, password } = req.body;
+
+  const email = rawEmail.trim();
+
+  const errors = validateAuthUser({ email, password });
   if (errors.length > 0) {
+    console.log("Validation errors:", errors);
     return res.status(400).json({ message: errors.join(' ') });
   }
 
   try {
     const user = await User.findOne({ email });
-    
-    if (user && (await bcrypt.compare(password, user.password))) {
-      res.json({
-        _id: user._id,
-        username: user.username,
-        email: user.email,
-        token: generateToken(user._id)
-      });
-    } else {
+    if (!user) {
+      console.log(`No user found for email="${email}"`);
       return res.status(401).json({ message: 'Invalid email or password' });
     }
+
+    console.log("Stored hash:", user.password);
+    const match = await bcrypt.compare(password, user.password);
+    console.log("Password match?", match);
+
+    if (!match) {
+      return res.status(401).json({ message: 'Invalid email or password' });
+    }
+
+    // Successful login
+    const token = generateToken(user._id);
+    console.log("Issuing token:", token);
+    res.json({
+      _id: user._id,
+      username: user.username,
+      email: user.email,
+      token
+    });
+
   } catch (error) {
-    return res.status(500).json({ message: error.message });
+    console.error("Login error:", error);
+    res.status(500).json({ message: error.message });
   }
-})
+});
+
 
 export default router;
