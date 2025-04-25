@@ -1,33 +1,32 @@
 import React, { useState } from 'react';
-import { Navigate, Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 
-export default function Login() {
-  const [form, setForm]     = useState({ email: '', password: '' });
-  const [error, setError]   = useState('');
-  const [redirect, setRedirect] = useState(false);
+export default function Login({onLogin}) {
+  const [form, setForm]   = useState({ email: '', password: '' });
+  const [error, setError] = useState('');
+  const navigate          = useNavigate();
 
   const handleChange = e => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = async e => {
     e.preventDefault();
+    setError('');
     try {
       const { data } = await axios.post('http://localhost:3000/auth/login', form);
       localStorage.setItem('token', data.token);
       axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
       setForm({ email: '', password: '' });
-      setRedirect(true);            // trigger the redirect below
+
+      console.log("login");
+      onLogin();
+      navigate('/', { replace: true });
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');
     }
   };
-
-  // If redirect is true, render a <Navigate> to "/"
-  if (redirect) {
-    return <Navigate to="/" replace />;
-  }
 
   return (
     <div className="auth-card">
@@ -41,8 +40,8 @@ export default function Login() {
             name="email"
             value={form.email}
             onChange={handleChange}
-            autoComplete="off"
             required
+            autoComplete="off"
           />
         </label>
         <label>
@@ -52,15 +51,15 @@ export default function Login() {
             name="password"
             value={form.password}
             onChange={handleChange}
-            autoComplete="new-password"
             required
+            autoComplete="new-password"
           />
         </label>
         <button type="submit">Log In</button>
-        <p>
-          Don't have an account? <Link to="/signup">Sign Up</Link>
-        </p>
       </form>
+      <p>
+        Don't have an account? <Link to="/signup">Sign Up</Link>
+      </p>
     </div>
   );
 }

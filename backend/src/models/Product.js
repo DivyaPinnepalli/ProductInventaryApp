@@ -2,7 +2,7 @@ import { Schema, model } from 'mongoose';
 
 const productSchema = new Schema({
   user:            { type: Schema.Types.ObjectId, ref: 'User', required: true },
-  barcode:         { type: String, required: true, unique: true },
+  barcode:         { type: String, required: true },
   name:            { type: String, default: '' },
   brand:           { type: String, default: '' },
   category:        { type: [String], default: [] },

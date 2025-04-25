@@ -9,7 +9,11 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173',          
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization']  
+}));
 app.use(bodyParser.json());
 
 mongoose.connect('mongodb+srv://pinnepallidivya:eA3PkKkfzDd5vz9R@products.mtzboiw.mongodb.net/?retryWrites=true&w=majority&appName=products',)
