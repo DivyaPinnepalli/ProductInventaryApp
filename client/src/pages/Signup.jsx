@@ -17,6 +17,8 @@ export default function Signup() {
     try {
       const { data } = await axios.post('http://localhost:3000/auth/signup', form);
       localStorage.setItem('token', data.token);
+      localStorage.setItem('username', data.username);
+      localStorage.setItem('email', data.email);
       axios.defaults.headers.common['Authorization'] = `Bearer ${data.token}`;
       setForm({ email: '', password: '' });
       navigate('/');
